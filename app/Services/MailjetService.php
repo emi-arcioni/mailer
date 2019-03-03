@@ -36,6 +36,8 @@ class MailjetService{
 			'SandboxMode' => true
 		];
 		// TODO: error resolver to catch ConnectException
+		// $client->setTimeout(3); ?
+		
 		$response = $this->mailjet->post(Resources::$Email, ['body' => $body]);
 		$message = $response->getData()['Messages'][0];
 		
