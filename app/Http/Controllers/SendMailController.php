@@ -22,7 +22,9 @@ class SendMailController extends Controller
 			'subject' => 'Este es el asunto',
 			'body' => 'Este es el cuerpo del mensaje'
 		];
-		$response = $this->mail_sender->sendUsingMailjet($data);
+		// $response = $this->mail_sender->sendUsingMailjet($data);
+
+		$response = $this->mail_sender->sendUsingSendgrid($data);
 		
 		return response()->json($response, 200);
 	}

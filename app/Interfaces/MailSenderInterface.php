@@ -5,5 +5,5 @@ use Illuminate\Http\Request;
 
 interface MailSenderInterface {
 	public function sendUsingMailjet($data);
-	public function sendUsingSendgrid();
+	public function sendUsingSendgrid($data);
 }
