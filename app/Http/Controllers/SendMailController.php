@@ -34,13 +34,16 @@ class SendMailController extends Controller
 		if ($response['Status'] == 'error') {
 			$response = $this->mail_sender->sendUsingSendgrid($data);
 			if ($response == 202) {
-				return response()->json(['message' => 'The mail was sent to ' . $data['to']['email']], 200);		
+				return $this->response($data['to']['email']);
 			}
 		} else {
-			return response()->json(['message' => 'The mail was sent to ' . $data['to']['email']], 200);	
-		}		
+			return $this->response($data['to']['email']);
+		}
 		
-		
+	}
+
+	private function response($email, $status = 200) {
+		return response()->json(['message' => 'The mail was sent to ' . $email], $status);
 	}
 
 	/*public function sendWithDefaults() {
