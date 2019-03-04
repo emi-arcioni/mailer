@@ -13,6 +13,7 @@ class MailjetService{
 	public function __construct(){
 
 		$this->mailjet = new \Mailjet\Client(getenv('MJ_APIKEY_PUBLIC'), getenv('MJ_APIKEY_PRIVATE'), true, ['version' => 'v3.1']);
+		$this->mailjet->setConnectionTimeout(15);
 	}
 
 	public function make($data){
@@ -35,8 +36,6 @@ class MailjetService{
 			],
 			'SandboxMode' => true
 		];
-		// TODO: error resolver to catch ConnectException
-		// $client->setTimeout(3); ?
 		
 		$response = $this->mailjet->post(Resources::$Email, ['body' => $body]);
 		$message = $response->getData()['Messages'][0];
