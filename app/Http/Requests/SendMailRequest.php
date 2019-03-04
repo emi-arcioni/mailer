@@ -13,8 +13,7 @@ class SendMailRequest{
 
 		if ($validator->fails()) {
 			$error = $validator->failed();
-			$data = array('inputs' => $error);
-			abort(400, json_encode($data));
+			abort(400, json_encode($error));
 		}
 
 	}
