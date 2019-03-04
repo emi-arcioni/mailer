@@ -14,11 +14,11 @@ class LogDeliveryService {
 	public function make($data) {
 
 		$delivery = DB::table('deliveries')->insert([
-			'email_to' => $data->to->email,
-			'name_to' => $data->to->name,
-			'subject' => $data->subject,
-			'body' => $data->body,
-			'status_id' => $data->status_id,
+			'email_to' => $data['to']['email'],
+			'name_to' => $data['to']['name'],
+			'subject' => $data['subject'],
+			'body' => $data['body'],
+			'status_id' => $data['status_id'],
 			'created_at' => new \DateTime()
 		]);
 

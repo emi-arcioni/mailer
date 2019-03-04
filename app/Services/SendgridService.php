@@ -22,9 +22,9 @@ class SendgridService{
 	}
 
 	public function make($data) {
-		$this->sendgrid->setSubject($data->subject);
-		$this->sendgrid->addTo($data->to->email, $data->to->name);
-		$this->sendgrid->addContent("text/plain", $data->body);
+		$this->sendgrid->setSubject($data['subject']);
+		$this->sendgrid->addTo($data['to']['email'], $data['to']['name']);
+		$this->sendgrid->addContent("text/plain", $data['body']);
 
 		$sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
 
@@ -36,10 +36,10 @@ class SendgridService{
 		
 		switch($response->statusCode()){
 			case 202:
-				$data->status_id = 1;
+				$data['status_id'] = 1;
 				break;
 			case 401:
-				$data->status_id = 2;
+				$data['status_id'] = 2;
 				break;
 		}
 

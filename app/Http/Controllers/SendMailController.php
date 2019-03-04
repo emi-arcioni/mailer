@@ -4,20 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\MailSenderInterface;
 use Illuminate\Http\Request;
+use App\Http\Requests\SendMailRequest;
 
 class SendMailController extends Controller
 {
 	
 	protected $mail_sender;
+	protected $validate;
 
-	public function __construct(MailSenderInterface $mail_sender) {
+	public function __construct(
+		MailSenderInterface $mail_sender,
+		SendMailRequest $validate
+	) {
 		$this->mail_sender = $mail_sender;
+		$this->validate = $validate;
 	}
 
 	public function send(Request $request) {
 
-		return $this->sendWithDefaults();
-		
+		$this->validate->send($request->all());
+		$response = $this->doSend($request->input());
+
+		return $response;
 	}
 
 	public function doSend($data) {
@@ -25,14 +33,19 @@ class SendMailController extends Controller
 		
 		if ($response['Status'] == 'error') {
 			$response = $this->mail_sender->sendUsingSendgrid($data);
+			if ($response == 202) {
+				return response()->json(['message' => 'The mail was sent to ' . $data['to']['email']], 200);		
+			}
+		} else {
+			return response()->json(['message' => 'The mail was sent to ' . $data['to']['email']], 200);	
 		}		
 		
-		return response()->json($response, 200);
+		
 	}
 
-	public function sendWithDefaults() {
-		$data = (object)[
-			'to' => (object)[
+	/*public function sendWithDefaults() {
+		$data = [
+			'to' => [
 				'email' => 'emilio@arcioni.com.ar',
 				'name' => 'Emilio Arcioni'
 			],
@@ -41,5 +54,5 @@ class SendMailController extends Controller
 		];
 
 		return $this->doSend($data);
-	}
+	}*/
 }

@@ -30,12 +30,12 @@ class MailjetService{
 					],
 					'To' => [
 						[
-							'Email' => $data->to->email,
-							'Name' => $data->to->name
+							'Email' => $data['to']['email'],
+							'Name' => $data['to']['name']
 						]
 					],
-					'Subject' => $data->subject,
-					'TextPart' => $data->body
+					'Subject' => $data['subject'],
+					'TextPart' => $data['body']
 				]
 			],
 			'SandboxMode' => true
@@ -46,10 +46,10 @@ class MailjetService{
 
 		switch($message['Status']){
 			case "success":
-				$data->status_id = 1;
+				$data['status_id'] = 1;
 				break;
 			case "error":
-				$data->status_id = 2;
+				$data['status_id'] = 2;
 				break;
 		}
 
