@@ -33,8 +33,7 @@ class sendMailCommand extends Command
      */
     public function handle() {
         $params = json_decode($this->argument('params'), true);
-        $this->validate->send($params);
-
+        $this->validate->send($params ? $params : []);
         $response = $this->send_mail->doSend($params);
 
         $this->info($response);
