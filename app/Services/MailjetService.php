@@ -38,7 +38,7 @@ class MailjetService{
 					'TextPart' => $data['body']
 				]
 			],
-			'SandboxMode' => true
+			// 'SandboxMode' => true
 		];
 		
 		$response = $this->mailjet->post(Resources::$Email, ['body' => $body]);
