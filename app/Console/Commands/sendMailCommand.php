@@ -34,7 +34,7 @@ class sendMailCommand extends Command
     public function handle() {
         $params = json_decode($this->argument('params'), true);
         $this->validate->send($params ? $params : []);
-        $response = $this->send_mail->doSend($params);
+        $response = $this->send_mail->queue($params);
 
         $this->info($response);
     }

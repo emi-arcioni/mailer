@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Interfaces\MailSenderInterface;
 use Illuminate\Http\Request;
 use App\Http\Requests\SendMailRequest;
+use App\Jobs\SendMail;
+use Queue;
 
 class SendMailController extends Controller
 {
@@ -23,9 +25,13 @@ class SendMailController extends Controller
 	public function send(Request $request) {
 
 		$this->validate->send($request->all());
-		$response = $this->doSend($request->input());
+		return $this->queue($request->input());
+	}
 
-		return $response;
+	public function queue($data) {
+		Queue::push(new SendMail($this, $data));
+
+		return;
 	}
 
 	public function doSend($data) {
