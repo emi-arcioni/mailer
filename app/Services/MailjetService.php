@@ -35,7 +35,8 @@ class MailjetService{
 						]
 					],
 					'Subject' => $data['subject'],
-					'TextPart' => $data['body']
+					'TextPart' => strip_tags($data['body']),
+					'HTMLPart' => $data['body']
 				]
 			],
 			// 'SandboxMode' => true

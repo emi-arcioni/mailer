@@ -24,7 +24,8 @@ class SendgridService{
 	public function make($data) {
 		$this->sendgrid->setSubject($data['subject']);
 		$this->sendgrid->addTo($data['to']['email'], $data['to']['name']);
-		$this->sendgrid->addContent("text/plain", $data['body']);
+		$this->sendgrid->addContent("text/plain", strip_tags($data['body']));
+		$this->sendgrid->addContent("text/html", $data['body']);
 
 		$sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
 
