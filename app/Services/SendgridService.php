@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use \SendGrid\Mail\Mail;
 use App\Services\LogDeliveryService;
+use Event;
+use App\Events\MailSentEvent;
 
 class SendgridService{
 
@@ -46,7 +48,7 @@ class SendgridService{
 				break;
 		}
 
-		$this->log_delivery_service->make($data);
+		Event::fire(new MailSentEvent($data));
 
 		return $response->statusCode();
 	}

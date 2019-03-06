@@ -5,16 +5,14 @@ namespace App\Services;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use \Mailjet\Resources;
-use App\Services\LogDeliveryService;
+use Event;
+use App\Events\MailSentEvent;
 
 class MailjetService{
 
 	protected $mailjet;
-	protected $log_delivery_service;
 
-	public function __construct(LogDeliveryService $log_delivery_service){
-
-		$this->log_delivery_service = $log_delivery_service;
+	public function __construct(){
 
 		$this->mailjet = new \Mailjet\Client(getenv('MJ_APIKEY_PUBLIC'), getenv('MJ_APIKEY_PRIVATE'), true, ['version' => 'v3.1']);
 		$this->mailjet->setConnectionTimeout(15);
@@ -57,7 +55,7 @@ class MailjetService{
 				break;
 		}
 
-		$this->log_delivery_service->make($data);
+		Event::fire(new MailSentEvent($data));
 		
 		return $message;
 	}
