@@ -5,18 +5,14 @@ namespace App\Services;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use \SendGrid\Mail\Mail;
-use App\Services\LogDeliveryService;
 use Event;
 use App\Events\MailSentEvent;
 
 class SendgridService{
 
 	protected $sendgrid;
-	protected $log_delivery_service;
 
-	public function __construct(LogDeliveryService $log_delivery_service){
-
-		$this->log_delivery_service = $log_delivery_service;
+	public function __construct(){
 
 		$this->sendgrid = new Mail();
 		$this->sendgrid->setFrom(getenv('MAIL_FROM_EMAIL'), getenv('MAIL_FROM_NAME'));
