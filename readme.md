@@ -1,21 +1,24 @@
-# Lumen PHP Framework
+# Mailer by Emilio Arcioni
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+The main goal of this service is to send transactional emails
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+## Installation
 
-## Official Documentation
+- Setup the variables in the .env file
+	- MAIL_FROM_EMAIL
+	- MAIL_FROM_NAME
+	- MJ_APIKEY_PUBLIC (for Mailjet)
+	- MJ_APIKEY_PRIVATE (for Mailjet)
+	- SENDGRID_API_KEY (for Sendgrid)
+- If you want to use the queue service change the variable `QUEUE_CONNECTION` in the .env to `database`
+- Run `php artisan migrate` and `php artisan db:seed` 
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+## Use of interfaces and repositories
 
-## Security Vulnerabilities
+App\Providers\AppServiceProvider registers the bind between the Interface and Repository.
+The respository (MailSenderRepository) connects with the main service that sends mails (and its fallback).
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+## Services
 
-## License
-
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+All sending mail logic are developed within MailjetService and SendgridService.
+LogDeliveryService main purpose is to store the delivery log in database 
