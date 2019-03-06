@@ -6,6 +6,7 @@ use App\Http\Controllers\SendMailController;
 
 class SendMail extends Job
 {
+    public $tries = 3;
 
     protected $send_mail;
     protected $data;

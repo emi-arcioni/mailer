@@ -21,6 +21,14 @@ class MailjetService{
 	}
 
 	public function make($data){
+		$to = [];
+		foreach($data['to'] as $t) {
+			$to[] = [
+				'Email' => $t['email'],
+				'Name' => $t['name']
+			];
+		}
+
 		$body = [
 			'Messages' => [
 				[
@@ -28,12 +36,7 @@ class MailjetService{
 						'Email' => getenv('MAIL_FROM_EMAIL'),
 						'Name' => getenv('MAIL_FROM_NAME')
 					],
-					'To' => [
-						[
-							'Email' => $data['to']['email'],
-							'Name' => $data['to']['name']
-						]
-					],
+					'To' => $to,
 					'Subject' => $data['subject'],
 					'TextPart' => strip_tags($data['body']),
 					'HTMLPart' => $data['body']
