@@ -13,8 +13,10 @@ class LogDeliveryService {
 
 	public function make($data) {
 
+		$delivery = [];
+
 		foreach($data['to'] as $to) {
-			$delivery = DB::table('deliveries')->insert([
+			$delivery[] = DB::table('deliveries')->insert([
 				'email_to' => $to['email'],
 				'name_to' => $to['name'],
 				'subject' => $data['subject'],

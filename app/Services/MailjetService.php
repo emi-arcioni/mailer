@@ -19,6 +19,15 @@ class MailjetService{
 	}
 
 	public function make($data){
+		$defaults = [
+			'to' => [],
+			'subject' => '',
+			'body' => ''
+		];
+
+		$data = array_merge($defaults, $data);
+
+
 		$to = [];
 		foreach($data['to'] as $t) {
 			$to[] = [
