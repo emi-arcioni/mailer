@@ -20,6 +20,9 @@ The main goal of this service is to send transactional emails
 To keep the queue worker alive please run
 `docker exec mailer_php_1 html/artisan queue:work`
 
+## API
+The mail could be sent consuming the API endpoint GET `/sendmail` or through the artisan command `mail:send`
+
 ## Use of interfaces and repositories
 
 App\Providers\AppServiceProvider registers the bind between the Interface and Repository.
