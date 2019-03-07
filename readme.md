@@ -11,7 +11,14 @@ The main goal of this service is to send transactional emails
 	- MJ_APIKEY_PRIVATE (for Mailjet)
 	- SENDGRID_API_KEY (for Sendgrid)
 - If you want to use the queue service change the variable `QUEUE_CONNECTION` in the .env to `database`
-- Run `php artisan migrate` and `php artisan db:seed` 
+
+### Docker
+- Run `docker-compose up -d --build` at the root of the project
+- Run `docker exec mailer_php_1 html/artisan migrate --seed`
+- The app will be accessible in http://localhost:8080
+
+To keep the queue worker alive please run
+`docker exec mailer_php_1 html/artisan queue:work`
 
 ## Use of interfaces and repositories
 
